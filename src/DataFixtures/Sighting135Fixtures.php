@@ -2,9 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\BigFootSighting;
 use App\Entity\Comment;
-use App\Entity\User;
 use App\Repository\BigFootSightingRepository;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -41,7 +39,7 @@ class Sighting135Fixtures extends Fixture
         $sighting = $this->bigFootSightingRepository->find(135);
         $users = $this->userRepository->findAll();
 
-        $this->createMany(100, function (int $i) use ($sighting, $users) {
+        $this->createMany(500, function (int $i) use ($sighting, $users) {
             $comment = new Comment();
             if ($i % 5 === 0) {
                 // make every 5th comment done by a small set of users
@@ -70,7 +68,12 @@ class Sighting135Fixtures extends Fixture
             $this->objectManager->persist($object);
 
             $objects[] = $object;
+
+            if (($i % 100) === 0) {
+                $this->objectManager->flush();
+            }
         }
+
         $this->objectManager->flush();
 
         return $objects;
