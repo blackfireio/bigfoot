@@ -34,7 +34,7 @@ hooks:
     build: |
         set -x -e
 
-        curl -s https://get.symfony.com/cloud/configurator | bash
+        curl -s --fail https://get.symfony.com/cloud/configurator | bash
         symfony-build
     deploy: |
         set -x -e
